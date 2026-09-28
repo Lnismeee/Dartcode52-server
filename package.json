@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
+    "build-admin": "npm run build --prefix admin && node -e \"const fs=require('fs');fs.rmSync('assets',{recursive:true,force:true});fs.cpSync('admin/dist','.',{recursive:true})\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
