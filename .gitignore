@@ -1,0 +1,10 @@
+node_modules
+*.log
+
+# Du lieu khach moi: ten, loi chuc, so nguoi di.
+# Day la thong tin rieng tu cua khach, KHONG duoc day len GitHub cong khai.
+data/
+
+# Nhat ky khi chay server an (khong co cua so)
+out.txt
+err.txt

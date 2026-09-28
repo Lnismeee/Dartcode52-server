@@ -1,0 +1,134 @@
+==========================================================
+  CAI DAT NOI NHAN XAC NHAN THAM DU BANG GOOGLE SHEETS
+  Thiep cuoi La Ngoc & Lan Huong
+==========================================================
+
+Lam mot lan duy nhat, khoang 5 phut. Sau do chay mai mai,
+mien phi, khong bao gio ngu, khong bao gio mat du lieu.
+
+
+----------------------------------------------------------
+BUOC 1 - Tao bang tinh
+----------------------------------------------------------
+1. Mo  https://sheets.new
+2. Dat ten bang tinh, vi du: "Xac nhan tham du - Dam cuoi"
+
+   Khong can tu tao cot. Lan dau co khach gui, doan ma se tu
+   tao trang "RSVP" kem dong tieu de.
+
+
+----------------------------------------------------------
+BUOC 2 - Dan doan ma
+----------------------------------------------------------
+3. Tren thanh menu bam:  Tien ich mo rong  >  Apps Script
+   (tieng Anh: Extensions > Apps Script)
+
+4. Mot tab moi mo ra, co san file Code.gs voi vai dong mau.
+   XOA HET nhung dong co san do.
+
+5. Mo file  Code.gs  trong chinh thu muc nay, copy TOAN BO
+   noi dung, dan vao.
+
+   Tim dong   const MA_QUAN_TRI = 'DOI_MA_NAY';
+   thay DOI_MA_NAY bang ma quan tri that (dong VITE_ADMIN_KEY trong
+   file guest-admin/.env.local tren may ban).
+
+6. Bam bieu tuong dia mem de luu (hoac Ctrl + S)
+
+
+----------------------------------------------------------
+BUOC 3 - Trien khai
+----------------------------------------------------------
+7. Goc tren ben phai bam nut xanh  Trien khai  >  Ban trien khai moi
+   (tieng Anh: Deploy > New deployment)
+
+8. Ben trai co bieu tuong banh rang. Bam vao, chon  Ung dung web
+   (tieng Anh: Web app)
+
+9. Dien nhu sau - RAT QUAN TRONG:
+
+      Mo ta            : (de trong cung duoc)
+      Thuc thi voi tu cach : Toi  (Me)
+      Nguoi co quyen truy cap : BAT KY AI  (Anyone)
+
+   Dong "Bat ky ai" la bat buoc. Neu de "Bat ky ai co tai khoan
+   Google" thi khach mo thiep se bi chan, gui khong duoc.
+
+10. Bam  Trien khai  (Deploy)
+
+11. Google hoi quyen -> bam  Uy quyen truy cap  (Authorize access)
+    -> chon tai khoan Google cua ban
+    -> hien canh bao "Google chua xac minh ung dung nay"
+       => bam  Nang cao  (Advanced)
+       => bam  Chuyen den ... (khong an toan)  (Go to ... unsafe)
+       Day la ung dung do CHINH BAN viet, khong sao ca.
+    -> bam  Cho phep  (Allow)
+
+12. Xong, Google hien ra mot duong dan dang:
+
+       https://script.google.com/macros/s/AKfycb..................../exec
+
+    COPY duong dan nay. Do la thu can dien o buoc sau.
+    (Phai ket thuc bang  /exec  , khong phai  /dev )
+
+
+----------------------------------------------------------
+BUOC 4 - Khai bao cho web tren GitHub
+----------------------------------------------------------
+13. Mo  https://github.com/Lnismeee/Dartcode52/settings/variables/actions
+
+14. Bam  New repository variable
+
+       Name  :  VITE_API_URL
+       Value :  dan duong dan vua copy o buoc 12
+
+15. Bam  Add variable
+
+16. Day mot commit bat ky len nhanh main de web build lai:
+
+       cd "D:/DOWNLOAD/wedding-invitation" && git commit --allow-empty -m "bat xac nhan tham du" && git push origin main
+
+    Doi khoang 1-2 phut cho GitHub build xong.
+
+
+----------------------------------------------------------
+BUOC 5 (tuy chon) - Chay thu tren may minh
+----------------------------------------------------------
+Muon thu trong luc dang sua web o may, tao file
+   wedding-invitation/.env.local
+voi mot dong:
+
+   VITE_API_URL=https://script.google.com/macros/s/..../exec
+
+File .env.local da duoc gitignore, khong bi day len GitHub.
+Tao xong phai khoi dong lai  npm run dev  thi Vite moi doc.
+
+
+----------------------------------------------------------
+XEM DANH SACH KHACH
+----------------------------------------------------------
+Mo lai bang tinh o Buoc 1. Moi khach gui la mot dong, gom:
+
+   Ma | Ho va ten | Tham du | So khach | Loi chuc | Thoi diem gui
+
+   Tham du:  yes   = chac chan den
+             maybe = co the den
+             no    = xin phep vang
+
+Cot "Loi chuc" chinh la thu hien len So Luu But tren thiep.
+Dong nao de trong loi chuc thi khong hien.
+
+MUON XOA MOT LOI CHUC khoi thiep: xoa noi dung o cot Loi chuc
+cua dong do (hoac xoa ca dong). Thiep tu cap nhat, khong can
+build lai.
+
+
+----------------------------------------------------------
+NEU SUA LAI DOAN MA SAU NAY
+----------------------------------------------------------
+Sua xong phai bam:  Trien khai > Quan ly ban trien khai
+                    > bieu tuong but chi > Phien ban: Moi
+                    > Trien khai
+
+Neu chi bam Luu thoi thi ban dang chay van la ban cu.
+Duong dan /exec khong doi, khong phai khai bao lai GitHub.
