@@ -8,6 +8,12 @@
    Cach cai dat xem trong file  HUONG-DAN.txt  cung thu muc.
    =================================================================== */
 
+/**
+ * Chi xin quyen voi DUNG bang tinh chua doan ma nay, khong dong vao cac
+ * bang tinh khac trong tai khoan Google.
+ * @OnlyCurrentDoc
+ */
+
 
 /* ----------------------------------------------------------------
    MA QUAN TRI - doi chuoi duoi day thanh mot chuoi khac cua rieng ban
@@ -152,6 +158,8 @@ function xoaXacNhan(d) {
    ================================================================== */
 
 function dungMa(d) {
+  // Quen thay chu giu cho thi khoa luon, dung de ai doc repo cung vao duoc.
+  if (MA_QUAN_TRI === 'DOI_MA_NAY') return false;
   return String(d.key || '') === MA_QUAN_TRI;
 }
 
