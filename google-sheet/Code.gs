@@ -14,21 +14,9 @@
  * @OnlyCurrentDoc
  */
 
-
-/* ----------------------------------------------------------------
-   MA QUAN TRI - doi chuoi duoi day thanh mot chuoi khac cua rieng ban
-
-   Ma nay bao ve hai viec chi minh ban duoc lam: xem day du danh sach
-   khach, va xoa mot xac nhan. Khach mo thiep khong can va khong biet ma.
-
-   Doi o day thi phai doi giong het trong file:
-      guest-admin/.env.local    ->  VITE_ADMIN_KEY=...
-
-   Repo nay cong khai, nen o day chi de chu giu cho. Khi dan vao Apps
-   Script, thay DOI_MA_NAY bang ma that lay trong guest-admin/.env.local.
-   KHONG sua dong nay trong repo roi day len GitHub.
-   ---------------------------------------------------------------- */
-const MA_QUAN_TRI = 'DOI_MA_NAY';
+/* LUU Y: xem danh sach va xoa KHONG can ma quan tri (chu thiep chon vay
+   vi chi minh ho dung trang quan tri). Ai biet duong dan /exec hoac trang
+   lnismeee.github.io/Dartcode52-server/ deu xem va xoa duoc khach. */
 
 
 const TEN_TRANG = 'RSVP';
@@ -66,12 +54,8 @@ function doGet() {
 /* Moi thu gui len deu di qua day. Phan biet bang truong "action".
 
      khong co action  ->  khach bam Gui Xac Nhan (cong khai)
-     action: 'list'   ->  trang quan tri xin danh sach day du (can ma)
-     action: 'delete' ->  trang quan tri xoa mot xac nhan (can ma)
-
-   Dung doGet cho hai viec quan tri vi nhu the ma quan tri se nam tren
-   thanh dia chi, bi ghi lai trong nhat ky may chu. Gui bang POST thi
-   ma nam trong than yeu cau, kin hon. */
+     action: 'list'   ->  trang quan tri xin danh sach day du
+     action: 'delete' ->  trang quan tri xoa mot xac nhan */
 function doPost(e) {
   let d;
   try {
@@ -80,7 +64,7 @@ function doPost(e) {
     return traVe({ error: 'Du lieu gui len khong doc duoc' });
   }
 
-  if (d.action === 'list') return danhSachDayDu(d);
+  if (d.action === 'list') return danhSachDayDu();
   if (d.action === 'delete') return xoaXacNhan(d);
 
   return ghiXacNhan(d);
@@ -113,9 +97,7 @@ function ghiXacNhan(d) {
 
 
 /* Trang quan tri xin danh sach day du, gom ca trang thai va so khach. */
-function danhSachDayDu(d) {
-  if (!dungMa(d)) return traVe({ error: 'Sai ma quan tri' });
-
+function danhSachDayDu() {
   const danhSach = layTatCaDong().map((r) => ({
     id: String(r[COT_MA]),
     name: String(r[COT_TEN]),
@@ -131,8 +113,6 @@ function danhSachDayDu(d) {
 
 /* Xoa han mot dong khoi bang tinh theo ma. */
 function xoaXacNhan(d) {
-  if (!dungMa(d)) return traVe({ error: 'Sai ma quan tri' });
-
   const ma = String(d.id || '').trim();
   if (!ma) return traVe({ error: 'Thieu ma dong can xoa' });
 
@@ -156,13 +136,6 @@ function xoaXacNhan(d) {
 /* ==================================================================
    TIEN ICH
    ================================================================== */
-
-function dungMa(d) {
-  // Quen thay chu giu cho thi khoa luon, dung de ai doc repo cung vao duoc.
-  if (MA_QUAN_TRI === 'DOI_MA_NAY') return false;
-  return String(d.key || '') === MA_QUAN_TRI;
-}
-
 
 /* Hai nguoi thao tac cung luc co the ghi de len nhau. Khoa lai cho chac. */
 function trongKhoa(viec) {

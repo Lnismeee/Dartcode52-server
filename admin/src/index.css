@@ -1,0 +1,57 @@
+:root {
+  /* Xanh dương nhạt + trắng - đồng bộ với trang thiệp cưới */
+  --ink: #22405c; /* xanh navy đậm - chữ chính */
+  --blue-deep: #3d6c94; /* xanh đậm - tiêu đề, nhấn */
+  --blue: #7fb0d4; /* xanh chủ đạo */
+  --blue-soft: #b9d8ee; /* xanh nhạt */
+  --blue-pale: #dceefa; /* xanh rất nhạt */
+  --blue-mist: #f2f9fd; /* nền sáng gần trắng */
+  --white: #ffffff;
+  --silver: #a9c6db; /* viền, đường kẻ mảnh */
+
+  /* Bổ sung riêng cho trang quản trị */
+  --muted: #6d8aa6; /* chữ phụ, nhãn */
+  --line: #cfe2f0; /* đường kẻ bảng */
+  --danger: #c0392b; /* thông báo lỗi */
+
+  /* Font - đổi ở đây là đổi toàn trang */
+  --font-body:
+    "Be Vietnam Pro", system-ui, sans-serif; /* chữ thường - thiết kế riêng cho tiếng Việt */
+  --font-display: "Playfair Display", serif; /* tiêu đề */
+
+  font: 16px/1.6 var(--font-body);
+  color-scheme: light;
+  color: var(--ink);
+  background: var(--blue-mist);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  width: 100%;
+  min-height: 100svh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--blue-deep);
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}

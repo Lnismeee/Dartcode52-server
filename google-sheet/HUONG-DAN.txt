@@ -29,10 +29,6 @@ BUOC 2 - Dan doan ma
 5. Mo file  Code.gs  trong chinh thu muc nay, copy TOAN BO
    noi dung, dan vao.
 
-   Tim dong   const MA_QUAN_TRI = 'DOI_MA_NAY';
-   thay DOI_MA_NAY bang ma quan tri that (dong VITE_ADMIN_KEY trong
-   file guest-admin/.env.local tren may ban).
-
 6. Bam bieu tuong dia mem de luu (hoac Ctrl + S)
 
 

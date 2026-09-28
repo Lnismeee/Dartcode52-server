@@ -12,24 +12,10 @@ const DATA_FILE = path.join(__dirname, "data", "rsvp.json");
 
      GET  /                         -> danh sach loi chuc (cong khai)
      POST /  (khong co action)      -> khach gui xac nhan
-     POST /  { action: 'list' }     -> trang quan tri xin danh sach (can ma)
-     POST /  { action: 'delete' }   -> trang quan tri xoa mot dong (can ma)
+     POST /  { action: 'list' }     -> trang quan tri xin danh sach
+     POST /  { action: 'delete' }   -> trang quan tri xoa mot dong
 
    Loi tra ve dang { error } voi ma 200, giong het Apps Script. */
-
-// Ma quan tri: lay tu bien moi truong ADMIN_KEY, neu khong co thi doc
-// VITE_ADMIN_KEY trong guest-admin/.env.local de khoi khai bao hai noi.
-function docMaQuanTri() {
-  if (process.env.ADMIN_KEY) return process.env.ADMIN_KEY;
-  try {
-    const env = fs.readFileSync(path.join(__dirname, "..", "guest-admin", ".env.local"), "utf-8");
-    const dong = env.match(/^\s*VITE_ADMIN_KEY\s*=\s*(.+?)\s*$/m);
-    return dong ? dong[1].replace(/^["']|["']$/g, "") : "";
-  } catch {
-    return "";
-  }
-}
-const MA_QUAN_TRI = docMaQuanTri();
 
 function readRsvps() {
   if (!fs.existsSync(DATA_FILE)) return [];
@@ -83,10 +69,6 @@ function ghiXacNhan(d) {
   return { status: 201, body: { ok: true, ...entry } };
 }
 
-function dungMa(d) {
-  return Boolean(MA_QUAN_TRI) && String(d.key || "") === MA_QUAN_TRI;
-}
-
 function xoaXacNhan(d) {
   const id = String(d.id || "").trim();
   if (!id) return { error: "Thiếu mã dòng cần xoá" };
@@ -128,11 +110,8 @@ app.get("/", (req, res) => {
 app.post("/", (req, res) => {
   const d = req.body;
 
-  if (d.action === "list" || d.action === "delete") {
-    if (!dungMa(d)) return res.json({ error: "Sai mã quản trị" });
-    if (d.action === "list") return res.json(readRsvps());
-    return res.json(xoaXacNhan(d));
-  }
+  if (d.action === "list") return res.json(readRsvps());
+  if (d.action === "delete") return res.json(xoaXacNhan(d));
 
   res.json(ghiXacNhan(d).body);
 });
@@ -162,7 +141,4 @@ app.use((err, req, res, next) => {
 const PORT = Number(process.env.PORT) || 4000;
 app.listen(PORT, () => {
   console.log(`Wedding RSVP server running on http://localhost:${PORT}`);
-  if (!MA_QUAN_TRI) {
-    console.log("Chua co ma quan tri (ADMIN_KEY / guest-admin/.env.local) - trang quan tri se bi tu choi.");
-  }
 });
